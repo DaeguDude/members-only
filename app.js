@@ -1,3 +1,4 @@
+require("dotenv").config();
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -8,6 +9,18 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 var app = express();
+
+function connectToMongoDB() {
+  const mongoose = require("mongoose");
+  mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: "members_only",
+  });
+  const db = mongoose.connection;
+  db.on("error", console.error.bind(console, "MongoDB connection error:"));
+}
+connectToMongoDB();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
