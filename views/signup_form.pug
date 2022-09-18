@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Signup
+  
+  //- Here I need to create a form....
+  
+  form(method='POST' action='')
+    div.form-group
+      label(for='username') Username:
+      input(type='text' placeholder='' name='username' required='true')
+      label(for='password') Password:
+      input(type='password' placeholder='' name='username' required='true')
+      label(for='confirm-password') Confirm Password:
+      input(type='password' placeholder='' name='confirm-password' required='true')
+    button(type='submit') Submit
