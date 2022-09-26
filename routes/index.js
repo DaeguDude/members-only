@@ -23,12 +23,8 @@ router.delete("/post/:id", function (req, res, next) {
   res.send("NOT IMPLEMENTED: DELETE post");
 });
 
-router.get("/become-member", function (req, res, next) {
-  res.send("NOT IMPLEMENTED: GET become-member");
-});
-router.post("/become-member", function (req, res, next) {
-  res.send("NOT IMPLEMENTED: POST become-member");
-});
+router.get("/become-member", user_controller.become_member_get);
+router.post("/become-member", user_controller.become_member_post);
 
 router.get("/become-admin", function (req, res, next) {
   res.send("NOT IMPLEMENTED: GET become-admin");

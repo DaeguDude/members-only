@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 Become Member
+
+  if !user
+    h1 Please login to become a member
+
+  else if user && user.membership_status == "regular"
+    h1 You are already a club member!
+  
+  else
+    form(method='POST' action='')
+      div.form-group
+        label(for='secret-code') Secret Code:
+        input(type='text' placeholder='' name='secret-code' required='true')
+      button(type='submit') Submit

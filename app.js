@@ -32,12 +32,6 @@ function connectToMongoDB() {
 }
 connectToMongoDB();
 
-// TODO: Implement the login functionality with hashed password
-// Authentication: passport local strategy
-
-// - Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-
-// This will be called when we use the `passport.authenticate()`
 passport.use(
   new LocalStrategy(function verify(username, password, done) {
     console.log(username, password, done);
@@ -52,16 +46,7 @@ passport.use(
         return done(null, false, { message: "Incorrect username" });
       }
 
-      // Funny thing is, err is null. and res is false.
-      // bcrypt.compare is not working well!
-
-      // If it doesn't find the correct password, it should send out err.
-      // Let's have a closer look at bcrypt compare and see
-      // if it yields the error when user password does not match
       bcrypt.compare(password, user.password, (bcryptError, res) => {
-        // I found it....there was a stupid error...
-        console.log("bcryptError res", bcryptError, res);
-
         if (res) {
           // passwords match! log user in
           return done(null, user);

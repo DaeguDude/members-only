@@ -5,10 +5,16 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 
 // GET request for become-member
-exports.become_member_get = (req, res, next) => {};
+exports.become_member_get = (req, res, next) => {
+  // TODO: Show a join the club page
+
+  res.render("become_member", { user: req.user });
+};
 
 // POST request for become-member
-exports.become_member_post = (req, res, next) => {};
+exports.become_member_post = (req, res, next) => {
+  console.log("POST become_member: ");
+};
 
 // GET request for become-admin
 exports.become_admin_get = (req, res, next) => {};
@@ -77,9 +83,14 @@ exports.signup_post = [
     minNumbers: 1,
     minLowercase: 1,
   }),
+  body("confirm-password")
+    .exists()
+    .custom((value, { req }) => value === req.body.password)
+    .withMessage("Password should match"),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log("there was an error: ", errors);
     } else {
       const NUM_SALTS = 10;
       bcrypt.hash(req.body.password, NUM_SALTS, (err, hashedPassword) => {
