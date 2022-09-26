@@ -6,15 +6,32 @@ const bcrypt = require("bcryptjs");
 
 // GET request for become-member
 exports.become_member_get = (req, res, next) => {
-  // TODO: Show a join the club page
-
   res.render("become_member", { user: req.user });
 };
 
 // POST request for become-member
-exports.become_member_post = (req, res, next) => {
-  console.log("POST become_member: ");
-};
+exports.become_member_post = [
+  body("secret-code")
+    .trim()
+    .escape()
+    .isLength({ min: 6, max: 6 })
+    .withMessage("secret code is 6 characters long"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      console.log("there was an error");
+    }
+
+    // Here I can check if user is currently associate membership_status
+    // And if it is, make a request to the DB
+    const user = req.user;
+  },
+];
+
+// GOAL: Add a page where members can ‘join the club’ by entering a secret passcode.
+// TODO: Implement API for upgrading the membership
+console.log("POST become_member: ");
 
 // GET request for become-admin
 exports.become_admin_get = (req, res, next) => {};
@@ -54,7 +71,7 @@ exports.login_post = [
     console.log("yo");
 
     if (!errors.isEmpty()) {
-      res.render("login_form");
+      return res.render("login_form");
     }
 
     next();
