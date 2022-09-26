@@ -1,3 +1,5 @@
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop
+
 require("dotenv").config();
 var createError = require("http-errors");
 var express = require("express");
@@ -8,10 +10,13 @@ var logger = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+
+const User = require("./models/user");
 
 var app = express();
 
@@ -26,6 +31,60 @@ function connectToMongoDB() {
   db.on("error", console.error.bind(console, "MongoDB connection error:"));
 }
 connectToMongoDB();
+
+// TODO: Implement the login functionality with hashed password
+// Authentication: passport local strategy
+
+// - Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+
+// This will be called when we use the `passport.authenticate()`
+passport.use(
+  new LocalStrategy(function verify(username, password, done) {
+    console.log(username, password, done);
+
+    // Find user
+    User.findOne({ username: username }, (err, user) => {
+      if (err) {
+        return done(err);
+      }
+
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+
+      // Funny thing is, err is null. and res is false.
+      // bcrypt.compare is not working well!
+
+      // If it doesn't find the correct password, it should send out err.
+      // Let's have a closer look at bcrypt compare and see
+      // if it yields the error when user password does not match
+      bcrypt.compare(password, user.password, (bcryptError, res) => {
+        // I found it....there was a stupid error...
+        console.log("bcryptError res", bcryptError, res);
+
+        if (res) {
+          // passwords match! log user in
+          return done(null, user);
+        } else {
+          // passwords do not match!
+          return done(null, false, { message: "Incorrect password" });
+        }
+      });
+    });
+  })
+);
+
+// Will not be calling this function directly, they're used in
+// the background by passport.
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
