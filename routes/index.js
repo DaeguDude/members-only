@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 const user_controller = require("../controllers/userController");
+const post_controller = require("../controllers/postController");
 
 var express = require("express");
 var passport = require("passport");
@@ -10,15 +11,15 @@ var crypto = require("crypto");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  // TODO: here, if user is logged in, I want to give them a link
+  // to "create a new message". And direct to the create-message
+
+  res.render("index", { title: "Express", user: req.user });
 });
 
-router.get("/create-post", function (req, res, next) {
-  res.send("NOT IMPLEMENTED: GET create-post");
-});
-router.post("/create-post", function (req, res, next) {
-  res.send("NOT IMPLEMENTED: POST create-post");
-});
+router.get("/create-post", post_controller.create_post_get);
+router.post("/create-post", post_controller.create_post_post);
+
 router.delete("/post/:id", function (req, res, next) {
   res.send("NOT IMPLEMENTED: DELETE post");
 });

@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Create Post
+
+  form(method='POST' action='' novalidate="novalidate")
+    div.form-group
+      label(for='title') Title:
+      input(type='text' placeholder='Enter your title here' name='title' )
+      label(for='message') Message:
+      textarea(placeholder='Enter your message here' name='message' )
+    button(type='submit') Submit
