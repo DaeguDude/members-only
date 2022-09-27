@@ -23,15 +23,22 @@ exports.become_member_post = [
       console.log("there was an error");
     }
 
-    // Here I can check if user is currently associate membership_status
-    // And if it is, make a request to the DB
     const user = req.user;
+    if (user.membership_status === "associate") {
+      User.findByIdAndUpdate(
+        user.id,
+        { membership_status: "regular" },
+        (err, result) => {
+          if (err) {
+            res.render("become-member");
+          }
+
+          res.render("index");
+        }
+      );
+    }
   },
 ];
-
-// GOAL: Add a page where members can ‘join the club’ by entering a secret passcode.
-// TODO: Implement API for upgrading the membership
-console.log("POST become_member: ");
 
 // GET request for become-admin
 exports.become_admin_get = (req, res, next) => {};
