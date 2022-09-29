@@ -4,5 +4,15 @@ block content
   h1= title
   p Welcome to #{title}
 
+  //- Here, I need to map through the posts
+
+  ul
+    each post in posts
+      li
+        div #{post.title}
+        div #{post.message}
+        div #{post.user}
+        div #{post.timestamp}
+
   if user
     a(href='/create-post') create post

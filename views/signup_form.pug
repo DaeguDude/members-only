@@ -5,7 +5,7 @@ block content
   
   //- Here I need to create a form....
   
-  form(method='POST' action='')
+  form(method='POST' action='' novalidate="novalidate")
     div.form-group
       label(for='username') Username:
       input(type='text' placeholder='' name='username' required='true')
@@ -13,4 +13,6 @@ block content
       input(type='password' placeholder='' name='password' required='true')
       label(for='confirm-password') Confirm Password:
       input(type='password' placeholder='' name='confirm-password' required='true')
+      label(for='admin') administrator:
+      input(type='checkbox' placeholder='' name='admin')
     button(type='submit') Submit

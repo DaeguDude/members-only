@@ -8,13 +8,21 @@ var express = require("express");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var crypto = require("crypto");
+const Post = require("../models/post");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  // TODO: here, if user is logged in, I want to give them a link
-  // to "create a new message". And direct to the create-message
+  Post.find({}).exec(function (err, list_posts) {
+    if (err) {
+      return next(err);
+    }
 
-  res.render("index", { title: "Express", user: req.user });
+    res.render("index", {
+      title: "Express",
+      user: req.user,
+      posts: list_posts,
+    });
+  });
 });
 
 router.get("/create-post", post_controller.create_post_get);
