@@ -14,13 +14,20 @@ exports.become_member_post = [
   body("secret-code")
     .trim()
     .escape()
-    .isLength({ min: 6, max: 6 })
-    .withMessage("secret code is 6 characters long"),
+    .isLength({ min: 5, max: 5 })
+    .withMessage("secret code is 5 characters long")
+    .custom((value) => value === process.env.SECRET_CODE)
+    .withMessage(
+      "Secret code does not match! Think where you can find them out😉"
+    ),
   (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      console.log("there was an error");
+      return res.render("become_member", {
+        user: req.user,
+        errors: errors.array(),
+      });
     }
 
     const user = req.user;
@@ -30,7 +37,7 @@ exports.become_member_post = [
         { membership_status: "regular" },
         (err, result) => {
           if (err) {
-            res.render("become-member");
+            res.render("become_member");
           }
 
           res.render("index");
