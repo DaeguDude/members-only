@@ -28,9 +28,7 @@ router.get("/", function (req, res, next) {
 router.get("/create-post", post_controller.create_post_get);
 router.post("/create-post", post_controller.create_post_post);
 
-router.delete("/post/:id", function (req, res, next) {
-  res.send("NOT IMPLEMENTED: DELETE post");
-});
+router.post("/post/:id/delete", post_controller.delete_post_post);
 
 router.get("/become-member", user_controller.become_member_get);
 router.post("/become-member", user_controller.become_member_post);

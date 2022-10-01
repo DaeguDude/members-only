@@ -6,11 +6,6 @@ exports.post_list = (req, res, next) => {};
 
 // GET request for create-post
 exports.create_post_get = (req, res, next) => {
-  // title: { type: String, required: true },
-  // timestamp: { type: Date, default: Date.now },
-  // message: { type: String, required: true },
-  // user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-
   res.render("post_form");
 };
 
@@ -46,4 +41,16 @@ exports.create_post_post = [
 ];
 
 // DELETE request for post
-exports.post_delete = (req, res, next) => {};
+exports.delete_post_post = (req, res, next) => {
+  Post.findByIdAndRemove(
+    req.params.id,
+    {},
+    function deletePost(err, document, response) {
+      if (err) {
+        return next(err);
+      }
+
+      return res.redirect("/");
+    }
+  );
+};

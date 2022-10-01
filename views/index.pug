@@ -3,16 +3,26 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  
+  nav
+    if user
+      a(href="/create-post") Create Post
+      a(href="/become-member") Become Member
+      a(href="") Log Out
+    else
+      a(href="") Log in
+      a(href="") Sign up
 
-  //- Here, I need to map through the posts
+  if posts
+    form
+      ul
+        each post in posts
+          li
+            div #{post.title}
+            div #{post.message}
+            div #{post.user}
+            div #{post.timestamp}
+            if user && user.admin 
+              button(type='submit' formaction=`/post/${post.id}/delete` formmethod="post") delete post
 
-  ul
-    each post in posts
-      li
-        div #{post.title}
-        div #{post.message}
-        div #{post.user}
-        div #{post.timestamp}
-
-  if user
-    a(href='/create-post') create post
+  
