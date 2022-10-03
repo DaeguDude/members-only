@@ -47,20 +47,8 @@ exports.become_member_post = [
   },
 ];
 
-// GET request for become-admin
-exports.become_admin_get = (req, res, next) => {};
-
-// POST request for become-admin
-exports.become_admin_post = (req, res, next) => {};
-
 // GET request for login
 exports.login_get = (req, res, next) => {
-  // TODO: Documentation starts from login and logout. So Let's first implement that page....
-  // (O)Create a view for login page
-  // (~)Implement functionality for login.
-  // Implement functionality for logout.
-  // IMplement functionality for signup
-
   res.render("login_form");
 };
 
@@ -91,6 +79,16 @@ exports.login_post = [
     next();
   },
 ];
+
+exports.logout_get = (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+
+    res.redirect("/login");
+  });
+};
 
 // GET request for signup
 exports.signup_get = (req, res, next) => {

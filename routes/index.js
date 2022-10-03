@@ -51,6 +51,8 @@ router.post(
   })
 );
 
+router.get("/logout", user_controller.logout_get);
+
 router.get("/signup", user_controller.signup_get);
 router.post("/signup", user_controller.signup_post);
 

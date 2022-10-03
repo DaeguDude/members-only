@@ -8,7 +8,9 @@ block content
     if user
       a(href="/create-post") Create Post
       a(href="/become-member") Become Member
-      a(href="") Log Out
+
+      // When this is clicked, I want to make website to send a POST request.
+      a(href="/logout") Log Out
     else
       a(href="login") Log in
       a(href="signup") Sign up
