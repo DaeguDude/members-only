@@ -12,17 +12,20 @@ const Post = require("../models/post");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  Post.find({}).exec(function (err, list_posts) {
-    if (err) {
-      return next(err);
-    }
+  Post.find({})
+    .populate("user")
+    .exec(function (err, list_posts) {
+      if (err) {
+        return next(err);
+      }
 
-    res.render("index", {
-      title: "Express",
-      user: req.user,
-      posts: list_posts,
+      // How can I know the username...from the object Id?
+      res.render("index", {
+        title: "Express",
+        user: req.user,
+        posts: list_posts,
+      });
     });
-  });
 });
 
 router.get("/create-post", post_controller.create_post_get);

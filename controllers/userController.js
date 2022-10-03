@@ -37,10 +37,10 @@ exports.become_member_post = [
         { membership_status: "regular" },
         (err, result) => {
           if (err) {
-            res.render("become_member");
+            return res.render("become_member");
           }
 
-          res.render("index");
+          res.redirect("/");
         }
       );
     }

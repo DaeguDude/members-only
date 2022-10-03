@@ -22,8 +22,8 @@ block content
           li
             div #{post.title}
             div #{post.message}
-            div #{post.user}
-            div #{post.timestamp}
+            div #{!!user ? post.user.username : "🥷 Unknown"}
+            div #{!!user ? post.timestamp_yyyymmdd : "⏰ Unknown"} 
             if user && user.admin 
               button(type='submit' formaction=`/post/${post.id}/delete` formmethod="post") delete post
 
