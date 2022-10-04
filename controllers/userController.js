@@ -121,7 +121,7 @@ exports.signup_post = [
     if (!errors.isEmpty()) {
       // TODO: IT should return to the signup page with an error.
       // Currently signup view is not handling any errors even if it's passed
-      res.render("signup_form", errors);
+      return res.render("signup_form", errors);
     } else {
       const NUM_SALTS = 10;
       bcrypt.hash(req.body.password, NUM_SALTS, (err, hashedPassword) => {

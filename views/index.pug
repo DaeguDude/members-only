@@ -7,9 +7,8 @@ block content
   nav
     if user
       a(href="/create-post") Create Post
-      a(href="/become-member") Become Member
-
-      // When this is clicked, I want to make website to send a POST request.
+      if !user.admin 
+        a(href="/become-member") Become Member
       a(href="/logout") Log Out
     else
       a(href="login") Log in
