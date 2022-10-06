@@ -21,7 +21,7 @@ router.get("/", function (req, res, next) {
 
       // How can I know the username...from the object Id?
       res.render("index", {
-        title: "Express",
+        title: "Members-Only",
         user: req.user,
         posts: list_posts,
       });
