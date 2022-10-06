@@ -2,7 +2,7 @@
 
 Members only project is where you can write anonymous posts. It is a little version of clubhouse. By becoming a member you can see who the author of a post is and when it's created. Want to try it out?
 
-[Members-Only Live Preview](https://dashboard.heroku.com/apps/obscure-dusk-89690)
+[Members-Only Live Preview](https://obscure-dusk-89690.herokuapp.com/)
 
 ## 📕 Features
 
@@ -13,7 +13,7 @@ Members only project is where you can write anonymous posts. It is a little vers
 
 ## 🧑‍🔧 How to use
 
-You can use it here on the [Members-Only Live Preview](https://dashboard.heroku.com/apps/obscure-dusk-89690). `SECRET_CODE` to become a member is a word **'sweet'**
+You can use it here on the [Members-Only Live Preview](https://obscure-dusk-89690.herokuapp.com/). `SECRET_CODE` to become a member is a word **'sweet'**
 
 To run locally, you will have to set up your own `MONGODB_URI` and `SECRET_CODE` in `.env` file.
 
